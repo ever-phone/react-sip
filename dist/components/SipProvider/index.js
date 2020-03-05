@@ -95,6 +95,12 @@ var SipProvider = (function (_super) {
         _this.holdCall = function (){
             _this.state.rtcSession.hold()
         };
+        _this.muteCall = function (){
+            _this.state.rtcSession.mute()
+        };
+        _this.unmuteCall = function (){
+            _this.state.rtcSession.unmute()
+        };
         _this.unholdCall = function (){
             _this.state.rtcSession.unhold()
         };
@@ -129,6 +135,8 @@ var SipProvider = (function (_super) {
             startCall: this.startCall,
             holdCall: this.holdCall,
             unholdCall: this.unholdCall,
+            muteCall: this.muteCall,
+            unmuteCall: this.unmuteCall,
             stopCall: this.stopCall,
         };
     };
@@ -391,8 +399,8 @@ var SipProvider = (function (_super) {
         unregisterSip: PropTypes.func,
         answerCall: PropTypes.func,
         startCall: PropTypes.func,
-        holdCall: PropTypes.func,
-        unholdCall: PropTypes.func,
+        muteCall: PropTypes.func,
+        unmuteCall: PropTypes.func,
         stopCall: PropTypes.func,
     };
     SipProvider.propTypes = {

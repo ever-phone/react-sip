@@ -54,6 +54,8 @@ export default class SipProvider extends React.Component<{
         startCall: PropTypes.Requireable<(...args: any[]) => any>;
         holdCall: PropTypes.Requireable<(...args: any[]) => any>;
         unholdCall: PropTypes.Requireable<(...args: any[]) => any>;
+        muteCall: PropTypes.Requireable<(...args: any[]) => any>;
+        unmuteCall: PropTypes.Requireable<(...args: any[]) => any>;
         stopCall: PropTypes.Requireable<(...args: any[]) => any>;
     };
     static propTypes: {
@@ -125,6 +127,10 @@ export default class SipProvider extends React.Component<{
         answerCall: () => void;
         startCall: (destination: any) => void;
         stopCall: () => void;
+        holdCall: () => void;
+        unholdCall: () => void;
+        muteCall: () => void;
+        unmuteCall: () => void;
     };
     componentDidMount(): void;
     componentDidUpdate(prevProps: any): void;
@@ -134,6 +140,8 @@ export default class SipProvider extends React.Component<{
     answerCall: () => void;
     holdCall: () => void;
     unholdCall: () => void;
+    muteCall: () => void;
+    unmuteCall: () => void;
     startCall: (destination: any) => void;
     stopCall: () => void;
     reconfigureDebug(): void;
