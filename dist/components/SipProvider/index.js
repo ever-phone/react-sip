@@ -400,6 +400,8 @@ var SipProvider = (function (_super) {
         answerCall: PropTypes.func,
         startCall: PropTypes.func,
         muteCall: PropTypes.func,
+        holdCall: PropTypes.func,
+        unholdCall: PropTypes.func,
         unmuteCall: PropTypes.func,
         stopCall: PropTypes.func,
     };
