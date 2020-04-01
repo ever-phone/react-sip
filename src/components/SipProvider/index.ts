@@ -57,7 +57,7 @@ export default class SipProvider extends React.Component<
     callCounterpart: string | null;
     rtcSession;
   }
-> {
+  > {
   public static childContextTypes = {
     sip: sipPropType,
     call: callPropType,
@@ -67,6 +67,8 @@ export default class SipProvider extends React.Component<
     answerCall: PropTypes.func,
     startCall: PropTypes.func,
     stopCall: PropTypes.func,
+    muteCall: PropTypes.func,
+    unmuteCall: PropTypes.func
   };
 
   public static propTypes = {
@@ -144,6 +146,10 @@ export default class SipProvider extends React.Component<
       answerCall: this.answerCall,
       startCall: this.startCall,
       stopCall: this.stopCall,
+      holdCall: this.holdCall,
+      unholdCall: this.unholdCall,
+      muteCall: this.muteCall,
+      unmuteCall: this.unmuteCall,
     };
   }
 
@@ -151,8 +157,8 @@ export default class SipProvider extends React.Component<
     if (window.document.getElementById("sip-provider-audio")) {
       throw new Error(
         `Creating two SipProviders in one application is forbidden. If that's not the case ` +
-          `then check if you're using "sip-provider-audio" as id attribute for any existing ` +
-          `element`,
+        `then check if you're using "sip-provider-audio" as id attribute for any existing ` +
+        `element`,
       );
     }
 
@@ -198,7 +204,7 @@ export default class SipProvider extends React.Component<
     if (this.state.sipStatus !== SIP_STATUS_CONNECTED) {
       throw new Error(
         `Calling registerSip is not allowed when sip status is ${
-          this.state.sipStatus
+        this.state.sipStatus
         } (expected ${SIP_STATUS_CONNECTED})`,
       );
     }
@@ -214,7 +220,7 @@ export default class SipProvider extends React.Component<
     if (this.state.sipStatus !== SIP_STATUS_REGISTERED) {
       throw new Error(
         `Calling unregisterSip is not allowed when sip status is ${
-          this.state.sipStatus
+        this.state.sipStatus
         } (expected ${SIP_STATUS_CONNECTED})`,
       );
     }
@@ -228,9 +234,9 @@ export default class SipProvider extends React.Component<
     ) {
       throw new Error(
         `Calling answerCall() is not allowed when call status is ${
-          this.state.callStatus
+        this.state.callStatus
         } and call direction is ${
-          this.state.callDirection
+        this.state.callDirection
         }  (expected ${CALL_STATUS_STARTING} and ${CALL_DIRECTION_INCOMING})`,
       );
     }
@@ -256,7 +262,7 @@ export default class SipProvider extends React.Component<
     ) {
       throw new Error(
         `Calling startCall() is not allowed when sip status is ${
-          this.state.sipStatus
+        this.state.sipStatus
         } (expected ${SIP_STATUS_CONNECTED} or ${SIP_STATUS_REGISTERED})`,
       );
     }
@@ -264,7 +270,7 @@ export default class SipProvider extends React.Component<
     if (this.state.callStatus !== CALL_STATUS_IDLE) {
       throw new Error(
         `Calling startCall() is not allowed when call status is ${
-          this.state.callStatus
+        this.state.callStatus
         } (expected ${CALL_STATUS_IDLE})`,
       );
     }
@@ -290,6 +296,26 @@ export default class SipProvider extends React.Component<
     this.setState({ callStatus: CALL_STATUS_STOPPING });
     this.ua.terminateSessions();
   };
+
+  public muteCall = () => {
+    this.state.rtcSession.mute()
+    console.log("muteCall")
+  }
+
+  public unmuteCall = () => {
+    this.state.rtcSession.unmute()
+    console.log("unmuteCall")
+  }
+
+  public holdCall = () => {
+    this.state.rtcSession.hold()
+    console.log("holdCall")
+  }
+
+  public unholdCall = () => {
+    this.state.rtcSession.unhold()
+    console.log("unholdCall")
+  }
 
   public reconfigureDebug() {
     const { debug } = this.props;
