@@ -67,6 +67,8 @@ export default class SipProvider extends React.Component<
     answerCall: PropTypes.func,
     startCall: PropTypes.func,
     stopCall: PropTypes.func,
+    holdCall: PropTypes.func,
+    unholdCall: PropTypes.func,
     muteCall: PropTypes.func,
     unmuteCall: PropTypes.func
   };
