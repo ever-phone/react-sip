@@ -92,21 +92,25 @@ var SipProvider = (function (_super) {
             _this.ua.call(destination, options);
             _this.setState({ callStatus: enums_1.CALL_STATUS_STARTING });
         };
-        _this.holdCall = function (){
-            _this.state.rtcSession.hold()
-        };
-        _this.muteCall = function (){
-            _this.state.rtcSession.mute()
-        };
-        _this.unmuteCall = function (){
-            _this.state.rtcSession.unmute()
-        };
-        _this.unholdCall = function (){
-            _this.state.rtcSession.unhold()
-        };
         _this.stopCall = function () {
             _this.setState({ callStatus: enums_1.CALL_STATUS_STOPPING });
             _this.ua.terminateSessions();
+        };
+        _this.muteCall = function () {
+            _this.state.rtcSession.mute();
+            console.log("muteCall");
+        };
+        _this.unmuteCall = function () {
+            _this.state.rtcSession.unmute();
+            console.log("unmuteCall");
+        };
+        _this.holdCall = function () {
+            _this.state.rtcSession.hold();
+            console.log("holdCall");
+        };
+        _this.unholdCall = function () {
+            _this.state.rtcSession.unhold();
+            console.log("unholdCall");
         };
         _this.state = {
             sipStatus: enums_1.SIP_STATUS_DISCONNECTED,
@@ -133,11 +137,11 @@ var SipProvider = (function (_super) {
             unregisterSip: this.unregisterSip,
             answerCall: this.answerCall,
             startCall: this.startCall,
+            stopCall: this.stopCall,
             holdCall: this.holdCall,
             unholdCall: this.unholdCall,
             muteCall: this.muteCall,
             unmuteCall: this.unmuteCall,
-            stopCall: this.stopCall,
         };
     };
     SipProvider.prototype.componentDidMount = function () {
@@ -399,11 +403,11 @@ var SipProvider = (function (_super) {
         unregisterSip: PropTypes.func,
         answerCall: PropTypes.func,
         startCall: PropTypes.func,
-        muteCall: PropTypes.func,
+        stopCall: PropTypes.func,
         holdCall: PropTypes.func,
         unholdCall: PropTypes.func,
-        unmuteCall: PropTypes.func,
-        stopCall: PropTypes.func,
+        muteCall: PropTypes.func,
+        unmuteCall: PropTypes.func
     };
     SipProvider.propTypes = {
         host: PropTypes.string,

@@ -52,11 +52,11 @@ export default class SipProvider extends React.Component<{
         unregisterSip: PropTypes.Requireable<(...args: any[]) => any>;
         answerCall: PropTypes.Requireable<(...args: any[]) => any>;
         startCall: PropTypes.Requireable<(...args: any[]) => any>;
+        stopCall: PropTypes.Requireable<(...args: any[]) => any>;
         holdCall: PropTypes.Requireable<(...args: any[]) => any>;
         unholdCall: PropTypes.Requireable<(...args: any[]) => any>;
         muteCall: PropTypes.Requireable<(...args: any[]) => any>;
         unmuteCall: PropTypes.Requireable<(...args: any[]) => any>;
-        stopCall: PropTypes.Requireable<(...args: any[]) => any>;
     };
     static propTypes: {
         host: PropTypes.Requireable<string>;
@@ -138,12 +138,12 @@ export default class SipProvider extends React.Component<{
     registerSip: () => any;
     unregisterSip: () => any;
     answerCall: () => void;
-    holdCall: () => void;
-    unholdCall: () => void;
-    muteCall: () => void;
-    unmuteCall: () => void;
     startCall: (destination: any) => void;
     stopCall: () => void;
+    muteCall: () => void;
+    unmuteCall: () => void;
+    holdCall: () => void;
+    unholdCall: () => void;
     reconfigureDebug(): void;
     reinitializeJsSIP(): void;
     render(): React.ReactNode;
