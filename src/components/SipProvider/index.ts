@@ -70,7 +70,9 @@ export default class SipProvider extends React.Component<
     holdCall: PropTypes.func,
     unholdCall: PropTypes.func,
     muteCall: PropTypes.func,
-    unmuteCall: PropTypes.func
+    unmuteCall: PropTypes.func,
+
+    sendDTMF: PropTypes.func
   };
 
   public static propTypes = {
@@ -152,6 +154,7 @@ export default class SipProvider extends React.Component<
       unholdCall: this.unholdCall,
       muteCall: this.muteCall,
       unmuteCall: this.unmuteCall,
+      sendDTMF: this.sendDTMF
     };
   }
 
@@ -301,23 +304,24 @@ export default class SipProvider extends React.Component<
 
   public muteCall = () => {
     this.state.rtcSession.mute()
-    console.log("muteCall")
   }
 
   public unmuteCall = () => {
     this.state.rtcSession.unmute()
-    console.log("unmuteCall")
   }
 
   public holdCall = () => {
     this.state.rtcSession.hold()
-    console.log("holdCall")
   }
 
   public unholdCall = () => {
     this.state.rtcSession.unhold()
-    console.log("unholdCall")
   }
+
+  public sendDTMF = (dtmfnum) => {
+    this.state.rtcSession.sendDTMF(dtmfnum)
+  };
+
 
   public reconfigureDebug() {
     const { debug } = this.props;
