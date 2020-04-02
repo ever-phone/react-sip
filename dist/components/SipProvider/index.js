@@ -98,19 +98,18 @@ var SipProvider = (function (_super) {
         };
         _this.muteCall = function () {
             _this.state.rtcSession.mute();
-            console.log("muteCall");
         };
         _this.unmuteCall = function () {
             _this.state.rtcSession.unmute();
-            console.log("unmuteCall");
         };
         _this.holdCall = function () {
             _this.state.rtcSession.hold();
-            console.log("holdCall");
         };
         _this.unholdCall = function () {
             _this.state.rtcSession.unhold();
-            console.log("unholdCall");
+        };
+        _this.sendDTMF = function (dtmfnum) {
+            _this.state.rtcSession.sendDTMF(dtmfnum);
         };
         _this.state = {
             sipStatus: enums_1.SIP_STATUS_DISCONNECTED,
@@ -142,6 +141,7 @@ var SipProvider = (function (_super) {
             unholdCall: this.unholdCall,
             muteCall: this.muteCall,
             unmuteCall: this.unmuteCall,
+            sendDTMF: this.sendDTMF
         };
     };
     SipProvider.prototype.componentDidMount = function () {
@@ -407,7 +407,8 @@ var SipProvider = (function (_super) {
         holdCall: PropTypes.func,
         unholdCall: PropTypes.func,
         muteCall: PropTypes.func,
-        unmuteCall: PropTypes.func
+        unmuteCall: PropTypes.func,
+        sendDTMF: PropTypes.func
     };
     SipProvider.propTypes = {
         host: PropTypes.string,

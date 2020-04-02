@@ -57,6 +57,7 @@ export default class SipProvider extends React.Component<{
         unholdCall: PropTypes.Requireable<(...args: any[]) => any>;
         muteCall: PropTypes.Requireable<(...args: any[]) => any>;
         unmuteCall: PropTypes.Requireable<(...args: any[]) => any>;
+        sendDTMF: PropTypes.Requireable<(...args: any[]) => any>;
     };
     static propTypes: {
         host: PropTypes.Requireable<string>;
@@ -131,6 +132,7 @@ export default class SipProvider extends React.Component<{
         unholdCall: () => void;
         muteCall: () => void;
         unmuteCall: () => void;
+        sendDTMF: (dtmfnum: any) => void;
     };
     componentDidMount(): void;
     componentDidUpdate(prevProps: any): void;
@@ -144,6 +146,7 @@ export default class SipProvider extends React.Component<{
     unmuteCall: () => void;
     holdCall: () => void;
     unholdCall: () => void;
+    sendDTMF: (dtmfnum: any) => void;
     reconfigureDebug(): void;
     reinitializeJsSIP(): void;
     render(): React.ReactNode;
