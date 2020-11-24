@@ -145,11 +145,6 @@ var SipProvider = (function (_super) {
         };
     };
     SipProvider.prototype.componentDidMount = function () {
-        if (window.document.getElementById("sip-provider-audio")) {
-            throw new Error("Creating two SipProviders in one application is forbidden. If that's not the case " +
-                "then check if you're using \"sip-provider-audio\" as id attribute for any existing " +
-                "element");
-        }
         this.remoteAudio = window.document.createElement("audio");
         this.remoteAudio.id = "sip-provider-audio";
         window.document.body.appendChild(this.remoteAudio);
