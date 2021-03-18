@@ -1,4 +1,5 @@
 import * as PropTypes from "prop-types";
+import { CallDirection, CallStatus, SipErrorType, SipStatus } from "./enums";
 
 export interface ExtraHeaders {
   register?: string[];
@@ -63,3 +64,30 @@ export const callPropType = PropTypes.shape({
   direction: PropTypes.string,
   counterpart: PropTypes.string,
 });
+
+export type Props = {
+  host: string[];
+  port: number;
+  pathname: string;
+  user: string[];
+  password: string[];
+  autoRegister: boolean;
+  autoAnswer: boolean;
+  iceRestart: boolean;
+  sessionTimersExpires: number;
+  extraHeaders: ExtraHeaders;
+  iceServers: IceServers;
+  debug: boolean;
+};
+
+export type State = {
+  sipStatus: SipStatus;
+  sipErrorType: SipErrorType | null;
+  sipErrorMessage: string | null;
+  callStatus: CallStatus;
+  callDirection: CallDirection | null;
+  callCounterpart: string | null;
+  rtcSession: any;
+};
+
+export type NewRTCSession = { originator: any; session: any; request: any };

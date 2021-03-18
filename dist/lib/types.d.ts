@@ -1,4 +1,5 @@
 import * as PropTypes from "prop-types";
+import { CallDirection, CallStatus, SipErrorType, SipStatus } from "./enums";
 export interface ExtraHeaders {
     register?: string[];
     invite?: string[];
@@ -58,3 +59,31 @@ export declare const callPropType: PropTypes.Requireable<PropTypes.InferProps<{
     direction: PropTypes.Requireable<string>;
     counterpart: PropTypes.Requireable<string>;
 }>>;
+export declare type Props = {
+    host: string[];
+    port: number;
+    pathname: string;
+    user: string[];
+    password: string[];
+    autoRegister: boolean;
+    autoAnswer: boolean;
+    iceRestart: boolean;
+    sessionTimersExpires: number;
+    extraHeaders: ExtraHeaders;
+    iceServers: IceServers;
+    debug: boolean;
+};
+export declare type State = {
+    sipStatus: SipStatus;
+    sipErrorType: SipErrorType | null;
+    sipErrorMessage: string | null;
+    callStatus: CallStatus;
+    callDirection: CallDirection | null;
+    callCounterpart: string | null;
+    rtcSession: any;
+};
+export declare type NewRTCSession = {
+    originator: any;
+    session: any;
+    request: any;
+};

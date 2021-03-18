@@ -1,4 +1,3 @@
+Description:https://github.com/ever-phone/sip-front
 
-Description:https://github.com/ever-phone/sip-front 
-
-package.jsonよりnpm packageとして利用
+package.json より npm package として利用

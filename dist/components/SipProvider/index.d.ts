@@ -1,53 +1,35 @@
 import * as PropTypes from "prop-types";
 import * as React from "react";
-import { CallDirection, CallStatus, SipErrorType, SipStatus } from "../../lib/enums";
-import { ExtraHeaders, IceServers } from "../../lib/types";
-export default class SipProvider extends React.Component<{
-    host: string;
-    port: number;
-    pathname: string;
-    user: string;
-    password: string;
-    autoRegister: boolean;
-    autoAnswer: boolean;
-    iceRestart: boolean;
-    sessionTimersExpires: number;
-    extraHeaders: ExtraHeaders;
-    iceServers: IceServers;
-    debug: boolean;
-}, {
-    sipStatus: SipStatus;
-    sipErrorType: SipErrorType | null;
-    sipErrorMessage: string | null;
-    callStatus: CallStatus;
-    callDirection: CallDirection | null;
-    callCounterpart: string | null;
-    rtcSession: any;
+import { Props, State } from "../../lib/types";
+export default class App extends React.Component<Props, {
+    infos: State[];
 }> {
     static childContextTypes: {
-        sip: PropTypes.Requireable<PropTypes.InferProps<{
-            status: PropTypes.Requireable<string>;
-            errorType: PropTypes.Requireable<string>;
-            errorMessage: PropTypes.Requireable<string>;
-            host: PropTypes.Requireable<string>;
-            port: PropTypes.Requireable<number>;
-            user: PropTypes.Requireable<string>;
-            password: PropTypes.Requireable<string>;
-            autoRegister: PropTypes.Requireable<boolean>;
-            autoAnswer: PropTypes.Requireable<boolean>;
-            sessionTimersExpires: PropTypes.Requireable<number>;
-            extraHeaders: PropTypes.Requireable<{
-                [x: string]: (string | null | undefined)[] | null | undefined;
-            }>;
-            iceServers: PropTypes.Requireable<(object | null | undefined)[]>;
-            debug: PropTypes.Requireable<boolean>;
-        }>>;
-        call: PropTypes.Requireable<PropTypes.InferProps<{
-            id: PropTypes.Requireable<string>;
-            status: PropTypes.Requireable<string>;
-            direction: PropTypes.Requireable<string>;
-            counterpart: PropTypes.Requireable<string>;
-        }>>;
+        users: PropTypes.Requireable<(PropTypes.InferProps<{
+            sip: PropTypes.Requireable<PropTypes.InferProps<{
+                status: PropTypes.Requireable<string>;
+                errorType: PropTypes.Requireable<string>;
+                errorMessage: PropTypes.Requireable<string>;
+                host: PropTypes.Requireable<string>;
+                port: PropTypes.Requireable<number>;
+                user: PropTypes.Requireable<string>;
+                password: PropTypes.Requireable<string>;
+                autoRegister: PropTypes.Requireable<boolean>;
+                autoAnswer: PropTypes.Requireable<boolean>;
+                sessionTimersExpires: PropTypes.Requireable<number>;
+                extraHeaders: PropTypes.Requireable<{
+                    [x: string]: (string | null | undefined)[] | null | undefined;
+                }>;
+                iceServers: PropTypes.Requireable<(object | null | undefined)[]>;
+                debug: PropTypes.Requireable<boolean>;
+            }>>;
+            call: PropTypes.Requireable<PropTypes.InferProps<{
+                id: PropTypes.Requireable<string>;
+                status: PropTypes.Requireable<string>;
+                direction: PropTypes.Requireable<string>;
+                counterpart: PropTypes.Requireable<string>;
+            }>>;
+        }> | null | undefined)[]>;
         registerSip: PropTypes.Requireable<(...args: any[]) => any>;
         unregisterSip: PropTypes.Requireable<(...args: any[]) => any>;
         answerCall: PropTypes.Requireable<(...args: any[]) => any>;
@@ -60,11 +42,11 @@ export default class SipProvider extends React.Component<{
         sendDTMF: PropTypes.Requireable<(...args: any[]) => any>;
     };
     static propTypes: {
-        host: PropTypes.Requireable<string>;
+        host: PropTypes.Requireable<(string | null | undefined)[]>;
         port: PropTypes.Requireable<number>;
         pathname: PropTypes.Requireable<string>;
-        user: PropTypes.Requireable<string>;
-        password: PropTypes.Requireable<string>;
+        user: PropTypes.Requireable<(string | null | undefined)[]>;
+        password: PropTypes.Requireable<(string | null | undefined)[]>;
         autoRegister: PropTypes.Requireable<boolean>;
         autoAnswer: PropTypes.Requireable<boolean>;
         iceRestart: PropTypes.Requireable<boolean>;
@@ -77,11 +59,11 @@ export default class SipProvider extends React.Component<{
         children: PropTypes.Requireable<PropTypes.ReactNodeLike>;
     };
     static defaultProps: {
-        host: null;
+        host: never[];
         port: null;
         pathname: string;
-        user: null;
-        password: null;
+        user: never[];
+        password: never[];
         autoRegister: boolean;
         autoAnswer: boolean;
         iceRestart: boolean;
@@ -97,56 +79,34 @@ export default class SipProvider extends React.Component<{
     private ua;
     private remoteAudio;
     private logger;
-    constructor(props: any);
+    private count;
+    constructor(props: Props);
     getChildContext(): {
-        sip: {
-            status: SipStatus;
-            errorType: "sipErrorType/CONFIGURATION" | "sipErrorType/CONNECTION" | "sipErrorType/REGISTRATION" | null;
-            errorMessage: string | null;
-            host: string;
-            port: number;
-            pathname: string;
-            user: string;
-            password: string;
-            autoRegister: boolean;
-            autoAnswer: boolean;
-            iceRestart: boolean;
-            sessionTimersExpires: number;
-            extraHeaders: ExtraHeaders;
-            iceServers: IceServers;
-            debug: boolean;
-            children?: React.ReactNode;
-        };
-        call: {
-            id: string;
-            status: CallStatus;
-            direction: "callDirection/INCOMING" | "callDirection/OUTGOING" | null;
-            counterpart: string | null;
-        };
-        registerSip: () => any;
-        unregisterSip: () => any;
-        answerCall: () => void;
-        startCall: (destination: any) => void;
-        stopCall: () => void;
-        holdCall: () => void;
-        unholdCall: () => void;
-        muteCall: () => void;
-        unmuteCall: () => void;
-        sendDTMF: (dtmfnum: any) => void;
+        users: any[];
+        registerSip: (i: number) => any;
+        unregisterSip: (i: number) => any;
+        answerCall: (i: number) => void;
+        startCall: (destination: any, i: number) => void;
+        stopCall: (i: number) => void;
+        holdCall: (i: number) => void;
+        unholdCall: (i: number) => void;
+        muteCall: (i: number) => void;
+        unmuteCall: (i: number) => void;
+        sendDTMF: (dtmfnum: any, i: number) => void;
     };
     componentDidMount(): void;
-    componentDidUpdate(prevProps: any): void;
+    componentDidUpdate(prevProps: Props): void;
     componentWillUnmount(): void;
-    registerSip: () => any;
-    unregisterSip: () => any;
-    answerCall: () => void;
-    startCall: (destination: any) => void;
-    stopCall: () => void;
-    muteCall: () => void;
-    unmuteCall: () => void;
-    holdCall: () => void;
-    unholdCall: () => void;
-    sendDTMF: (dtmfnum: any) => void;
+    registerSip: (i: number) => any;
+    unregisterSip: (i: number) => any;
+    answerCall: (i: number) => void;
+    startCall: (destination: any, i: number) => void;
+    stopCall: (i: number) => void;
+    muteCall: (i: number) => void;
+    unmuteCall: (i: number) => void;
+    holdCall: (i: number) => void;
+    unholdCall: (i: number) => void;
+    sendDTMF: (dtmfnum: any, i: number) => void;
     reconfigureDebug(): void;
     reinitializeJsSIP(): void;
     render(): React.ReactNode;
