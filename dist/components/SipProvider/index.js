@@ -179,7 +179,7 @@ var SipProvider = (function (_super) {
             this.logger = console;
         }
         else {
-            JsSIP.debug.disable("JsSIP:*");
+            JsSIP.debug.disable();
             this.logger = dummyLogger_1.default;
         }
     };

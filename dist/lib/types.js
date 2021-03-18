@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.callPropType = exports.sipPropType = exports.iceServersPropType = exports.extraHeadersPropType = void 0;
 var PropTypes = require("prop-types");
 exports.extraHeadersPropType = PropTypes.objectOf(PropTypes.arrayOf(PropTypes.string));
 exports.iceServersPropType = PropTypes.arrayOf(PropTypes.object);
