@@ -217,6 +217,7 @@ var App = (function (_super) {
             this.props.user !== prevProps.user ||
             this.props.password !== prevProps.password ||
             this.props.autoRegister !== prevProps.autoRegister) {
+            this.count = this.props.host.length;
             this.reinitializeJsSIP();
         }
     };
@@ -247,6 +248,8 @@ var App = (function (_super) {
         var _this = this;
         if (this.ua.length) {
             for (var i = 0; i < this.ua.length; i++) {
+                if (!this.ua[i])
+                    continue;
                 this.ua[i].stop();
             }
             this.ua = [];
@@ -265,14 +268,11 @@ var App = (function (_super) {
                     });
                     return { infos: infos };
                 });
-                return { value: void 0 };
             }
         };
         var this_1 = this;
         for (var i = 0; i < this.count; i++) {
-            var state_1 = _loop_1(i);
-            if (typeof state_1 === "object")
-                return state_1.value;
+            _loop_1(i);
         }
         var _loop_2 = function (i) {
             try {

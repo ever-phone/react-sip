@@ -197,6 +197,7 @@ export default class App extends React.Component<Props, { infos: State[] }> {
       this.props.password !== prevProps.password ||
       this.props.autoRegister !== prevProps.autoRegister
     ) {
+      this.count = this.props.host.length;
       this.reinitializeJsSIP();
     }
   }
@@ -366,6 +367,7 @@ export default class App extends React.Component<Props, { infos: State[] }> {
   public reinitializeJsSIP() {
     if (this.ua.length) {
       for (let i = 0; i < this.ua.length; i++) {
+        if (!this.ua[i]) continue;
         this.ua[i].stop();
       }
       this.ua = [];
@@ -392,7 +394,6 @@ export default class App extends React.Component<Props, { infos: State[] }> {
           );
           return { infos };
         });
-        return;
       }
     }
 
