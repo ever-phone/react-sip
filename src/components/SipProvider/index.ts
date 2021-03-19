@@ -162,25 +162,6 @@ export default class App extends React.Component<Props, { infos: State[] }> {
 
     this.count = this.props.host.length;
 
-    const tmp: State = {
-      sipStatus: SIP_STATUS_DISCONNECTED,
-      sipErrorType: null,
-      sipErrorMessage: null,
-
-      rtcSession: null,
-      // errorLog: [],
-      callStatus: CALL_STATUS_IDLE,
-      callDirection: null,
-      callCounterpart: null,
-    };
-
-    for (let i = 0; i < this.count; i++) {
-      this.setState((state) => {
-        const infos = [...state.infos, tmp];
-        return { infos };
-      });
-    }
-
     this.reconfigureDebug();
     this.reinitializeJsSIP();
   }
@@ -371,6 +352,25 @@ export default class App extends React.Component<Props, { infos: State[] }> {
         this.ua[i].stop();
       }
       this.ua = [];
+    }
+
+    const tmp: State = {
+      sipStatus: SIP_STATUS_DISCONNECTED,
+      sipErrorType: null,
+      sipErrorMessage: null,
+
+      rtcSession: null,
+      // errorLog: [],
+      callStatus: CALL_STATUS_IDLE,
+      callDirection: null,
+      callCounterpart: null,
+    };
+
+    for (let i = 0; i < this.count; i++) {
+      this.setState((state) => {
+        const infos = [...state.infos, tmp];
+        return { infos };
+      });
     }
 
     const { host, port, pathname, user, password, autoRegister } = this.props;

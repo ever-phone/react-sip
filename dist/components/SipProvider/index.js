@@ -189,21 +189,6 @@ var App = (function (_super) {
             throw new Error("There is a problem with the Props value ");
         }
         this.count = this.props.host.length;
-        var tmp = {
-            sipStatus: enums_1.SIP_STATUS_DISCONNECTED,
-            sipErrorType: null,
-            sipErrorMessage: null,
-            rtcSession: null,
-            callStatus: enums_1.CALL_STATUS_IDLE,
-            callDirection: null,
-            callCounterpart: null,
-        };
-        for (var i = 0; i < this.count; i++) {
-            this.setState(function (state) {
-                var infos = __spreadArrays(state.infos, [tmp]);
-                return { infos: infos };
-            });
-        }
         this.reconfigureDebug();
         this.reinitializeJsSIP();
     };
@@ -253,6 +238,21 @@ var App = (function (_super) {
                 this.ua[i].stop();
             }
             this.ua = [];
+        }
+        var tmp = {
+            sipStatus: enums_1.SIP_STATUS_DISCONNECTED,
+            sipErrorType: null,
+            sipErrorMessage: null,
+            rtcSession: null,
+            callStatus: enums_1.CALL_STATUS_IDLE,
+            callDirection: null,
+            callCounterpart: null,
+        };
+        for (var i = 0; i < this.count; i++) {
+            this.setState(function (state) {
+                var infos = __spreadArrays(state.infos, [tmp]);
+                return { infos: infos };
+            });
         }
         var _a = this.props, host = _a.host, port = _a.port, pathname = _a.pathname, user = _a.user, password = _a.password, autoRegister = _a.autoRegister;
         var _loop_1 = function (i) {
